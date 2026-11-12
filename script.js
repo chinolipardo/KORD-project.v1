@@ -10,7 +10,7 @@
    PART 7  START ..... the two lines that run when the page opens
    ====================================================================== */
 
-/* ======================================================================
+/* =====================================================================
    PART 1 - MEMORY
    Purpose: the app's "notes to itself". These variables always say what is
    happening right now. Every other part reads or changes them.
