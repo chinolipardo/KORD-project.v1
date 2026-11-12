@@ -8,11 +8,6 @@
    PART 5  LYRICS .... Now Playing page, lyrics sync, smooth scrolling
    PART 6  BUTTONS ... progress bar, volume, keyboard, button clicks
    PART 7  START ..... the two lines that run when the page opens
-
-   THE BIG IDEA (say this first):
-   "The app keeps notes in variables (Part 1). When something changes, we
-    update the notes and call render() (Part 4), which redraws the screen
-    from those notes. Nothing reloads, so the music never stops."
    ====================================================================== */
 
 /* ======================================================================
