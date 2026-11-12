@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KOЯD</title>
+  <link rel="stylesheet" href="style.css">   <!-- style.css = how it LOOKS -->
+</head>
+<body>
+<script>
+  /* If anything breaks, a red bar shows the error on screen (screenshot it and send it to me) */
+  window.onerror = function (msg, src, line) {
+    var d = document.createElement("div");
+    d.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99;background:#b00020;color:#fff;padding:10px;font:14px Arial";
+    d.textContent = "Error: " + msg + " (" + String(src).split("/").pop() + ", line " + line + ")";
+    document.body.appendChild(d);
+  };
+</script>
+<div class="app">
+
+  <div class="top">
+    <!-- 1. SIDEBAR (left): logo, Home / Search / Library buttons, playlist list -->
+    <aside class="side">
+      <div class="box">
+        <div class="logo">KOЯD</div>
+        <nav class="nav">
+          <button class="on" data-view="home"><i>⌂</i> Home</button>
+          <button data-view="search"><i>⌕</i> Search</button>
+          <button data-view="library"><i>▤</i> Your Library</button>
+        </nav>
+      </div>
+      <div class="box lib">
+        <div class="lib-head"><h3>Playlists</h3><button class="icon" id="pl-new" title="New playlist">＋</button></div>
+        <div id="plist"></div>   <!-- filled by script.js -->
+      </div>
+      <!-- small "now playing" card, filled by script.js -->
+      <div class="box mini" id="mini"></div>
+    </aside>
+
+    <!-- 2. MAIN SCREEN (middle): empty on purpose. script.js fills it with Home, Playlist, Search or Library. -->
+    <main class="box main" id="main"></main>
+
+    <!-- 3. NOW PLAYING POP-UP: hidden until you play a song or click the song in the bottom bar -->
+    <section class="lyrics" id="lyrics" aria-hidden="true" aria-label="Now playing">
+      <div class="lyrics-top">
+        <button class="icon lyrics-back" id="lyr-close" aria-label="Close">⌄</button>
+        <div class="lyrics-heading"><small>NOW PLAYING</small><b id="lyr-title">KOЯD</b></div>
+        <span class="lyrics-spacer"></span>
+      </div>
+      <div class="tabs"><button id="tab0" class="on">Now Playing</button><button id="tab1">Lyrics</button></div>
+
+      <!-- Two pages side by side: swipe left/right (or tap the tabs) to switch -->
+      <div class="slides" id="slides">
+        <!-- PAGE 1: album picture, song, artist, live lyrics, controls -->
+        <div class="slide" id="slide0">
+          <div class="lyrics-art" id="lyr-art">KOЯD</div>
+          <div class="lyrics-song-info"><h2 id="lyr-song-title">Choose a song</h2><p id="lyr-artist"></p></div>
+          <div class="peek" id="peek"></div>
+          <div class="nv-bar"><span id="nv-cur">0:00</span><div class="track" id="nv-track"><div class="fill" id="nv-fill"></div></div><span id="nv-tot">0:00</span></div>
+          <div class="nv-ctrls">
+            <button class="icon opt" id="nv-shuf" title="Shuffle">⤮</button>
+            <button class="icon" id="nv-prev">⏮</button>
+            <button class="pp" id="nv-pp">▶</button>
+            <button class="icon" id="nv-next">⏭</button>
+            <button class="icon opt" id="nv-rep" title="Repeat">↻</button>
+          </div>
+        </div>
+        <!-- PAGE 2: full lyrics -->
+        <div class="slide" id="slide1"><div class="lines" id="lines"></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 4. PLAYER BAR (bottom): song name, play / pause / next / previous, progress bar, volume -->
+  <footer class="box player">
+    <div class="now" id="now"></div>
+    <div class="center">
+      <div class="ctrls">
+        <button class="icon opt" id="shuf" title="Shuffle">⤮</button>
+        <button class="icon" id="prev" title="Previous">⏮</button>
+        <button class="pp" id="pp" title="Play">▶</button>
+        <button class="icon" id="next" title="Next">⏭</button>
+        <button class="icon opt" id="rep" title="Repeat">↻</button>
+      </div>
+      <div class="bar"><span id="cur">0:00</span><div class="track" id="track"><div class="fill" id="fill"></div></div><span id="tot">0:00</span></div>
+    </div>
+    <div class="vol"><button class="icon" id="lyr-btn" title="Lyrics">🎤</button><input type="range" id="vol" min="0" max="100" value="70"></div>
+  </footer>
+</div>
+
+<dialog id="dlg"></dialog>   <!-- pop-up for new playlist / add songs, filled by script.js -->
+
+<!-- The three script files load in this order. script.js is last because it uses the other two. -->
+<script src="songs.js"></script>   <!-- songs.js = the DATA: titles, artists, audio paths, lyrics -->
+<script src="playlists.js"></script>   <!-- playlists.js = your saved playlists -->
+<script src="script.js"></script>  <!-- script.js = how it WORKS (the logic) -->
+</body>
+</html>
